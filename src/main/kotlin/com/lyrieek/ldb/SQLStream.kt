@@ -3,10 +3,12 @@ package com.lyrieek.ldb
 import com.lyrieek.ldb.processor.IProcess
 import com.lyrieek.ldb.processor.ProcessAction
 import com.lyrieek.ldb.processor.ProcessResult
+import com.lyrieek.ldb.stroll.DataLinkedArray
 import com.lyrieek.ldb.structure.Entity
 
 class SQLStream(private val pe: ParseEngine) : Iterator<IProcess> {
 
+    private val dataArray: DataLinkedArray = DataLinkedArray()
     private val process: LinkedHashSet<IProcess> = LinkedHashSet()
     private var index = 0
     private var sql = ""
