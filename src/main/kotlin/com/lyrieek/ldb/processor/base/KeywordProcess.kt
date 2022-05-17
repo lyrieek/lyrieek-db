@@ -1,19 +1,34 @@
-package com.lyrieek.ldb.processor.base;
+package com.lyrieek.ldb.processor.base
 
+import com.lyrieek.ldb.language.BaseOperations
 import com.lyrieek.ldb.language.SQLType
 import com.lyrieek.ldb.processor.IProcess
 import com.lyrieek.ldb.processor.ProcessResult
+import java.util.*
 
 /**
  * 关键词处理器
  */
 class KeywordProcess(override val findKeywords: String = "") : IProcess() {
 
+    private lateinit var oper: BaseOperations
+    private var step: Int = 0
+
+    override fun innerCheck(): Boolean {
+        val find = Regex("^[a-zA-Z_]+").find(backSql) ?: return false
+        for (value in SQLType.values()) {
+            if (value.name.uppercase() == find.value.uppercase()) {
+                oper = value.oper
+                step = find.range.last + 1
+                return true
+            }
+        }
+        return false
+    }
+
     override fun submit(): ProcessResult {
-        val find = Regex("^[a-zA-Z_]+").find(backSql) ?: return ProcessResult(0)
-        SQLType.valueOf("").oper.create()
-        System.err.println("未知关键词:\"${find.value}\"")
-        return ProcessResult(find.range.last + 1)
+        println("操作:\"${oper.javaClass}\"")
+        return ProcessResult(step)
     }
 
 }
