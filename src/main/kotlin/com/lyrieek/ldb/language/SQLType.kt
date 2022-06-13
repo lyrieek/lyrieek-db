@@ -10,7 +10,7 @@ enum class SQLBaseType {
     TCL//Transaction Control Language,事务控制语言
 }
 
-enum class SQLType(val base: SQLBaseType, val oper: BaseOperations) {
+enum class SQLType(val base: SQLBaseType, val operation: BaseOperations) {
     SELECT(SQLBaseType.DQL, Query()),
 
     INSERT(SQLBaseType.DML, NotImplOperation()),
