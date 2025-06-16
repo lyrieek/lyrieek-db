@@ -16,7 +16,7 @@ class KeywordProcess(override val findKeywords: String = "") : IProcess() {
     override fun innerCheck(): Boolean {
         val find = Regex("^[a-zA-Z_]+").find(backSql) ?: return false
         for (value in SQLType.values()) {
-            if (value.name.uppercase() == find.value.uppercase()) {
+            if (value.name.equals(find.value, ignoreCase = true)) {
                 operation = value.operation
                 step = find.range.last + 1
                 return true
